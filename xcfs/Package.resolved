@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "FMake",
+        "repositoryURL": "https://github.com/blinksh/FMake",
+        "state": {
+          "branch": null,
+          "revision": "db46d80e35764c2367fb23ea01e1876d2c2fa9a6",
+          "version": "0.0.16"
+        }
+      },
+      {
+        "package": "SSHConfig",
+        "repositoryURL": "https://github.com/blinksh/SSHConfig",
+        "state": {
+          "branch": null,
+          "revision": "357648c1ecd2206585a14e61d09e6bb781d085b0",
+          "version": "0.0.5"
+        }
+      },
+      {
+        "package": "swift-argument-parser",
+        "repositoryURL": "https://github.com/blinksh/swift-argument-parser",
+        "state": {
+          "branch": null,
+          "revision": "3988c22d6601691d431b00b8b551b1fd6567d2ba",
+          "version": "0.5.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,59 @@
+*~
+#*#
+.DS_Store
+
+## Build generated
+build/
+.build
+DerivedData/
+
+## Various settings
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+
+## libs
+Frameworks/include/*
+Frameworks/lib/*
+
+## Precompiled frameworks
+Frameworks/libmoshios.framework
+Frameworks/libssh2.framework
+Frameworks/openssl.framework
+
+Resources/AppFont/
+
+## Other
+*.moved-aside
+*.xcuserstate
+developer_setup.xcconfig
+main.m
+
+## Obj-C/Swift specific
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# make and build files
+*.lst
+*.eep
+*.o
+*.lo
+*.la
+*.dylib
+*.lss
+*.map
+*.sym
+
+## Fonts
+Resources/Fonts/Pragmata*
+.swiftpm
+
+Blink.xcodeproj/project.xcworkspace/xcshareddata

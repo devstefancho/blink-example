@@ -1,0 +1,136 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+// B L I N K
+//
+// Copyright (C) 2016-2019 Blink Mobile Shell Project
+//
+// This file is part of Blink.
+//
+// Blink is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Blink is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Blink. If not, see <http://www.gnu.org/licenses/>.
+//
+// In addition, Blink is also subject to certain additional terms under
+// GNU GPL version 3 section 7.
+//
+// You should have received a copy of these additional terms immediately
+// following the terms and conditions of the GNU General Public License
+// which accompanied the Blink Source Code. If not, see
+// <http://www.github.com/blinksh/blink>.
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
+#import "BLKDefaults.h"
+
+@class TermView;
+@class TermDevice;
+@class TermInput;
+@class TermUIState;
+@class LayoutConstraintManager;
+
+extern NSString * TermViewReadyNotificationKey;
+extern NSString * TermViewBrowserReadyNotificationKey;
+
+@protocol TermViewDeviceProtocol
+
+@property BOOL rawMode;
+
+- (void)viewIsReady;
+- (void)viewFontSizeChanged:(NSInteger)size;
+- (void)viewWinSizeChanged:(struct winsize)win;
+- (void)viewSendString:(NSString *)data;
+- (void)viewCopyString:(NSString *)text;
+- (void)viewShowAlert:(NSString *)title andMessage:(NSString *)message;
+- (void)viewSubmitLine:(NSString *)line;
+- (void)viewAPICall:(NSString *)api andJSONRequest:(NSString *)request;
+- (void)viewNotify:(NSDictionary *)data;
+- (void)viewSelectionChanged;
+- (void)viewDidReceiveBellRing;
+
+@end
+
+
+@class SmarterTermInput;
+
+@interface TermView : UIView
+
+- (nonnull instancetype)initWithFrame:(CGRect)frame termUIState:(nonnull TermUIState *)termUIState;
+
+@property (nonatomic, readonly) NSString *title;
+@property (nonatomic, readonly) BOOL hasSelection;
+@property (nonatomic, readonly) NSURL *detectedLink;
+@property (nonatomic, readonly) NSString *selectedText;
+@property (nonatomic) id<TermViewDeviceProtocol> device;
+@property (nonatomic) UIEdgeInsets additionalInsets;
+@property (nonatomic) BOOL layoutLocked;
+@property (nonatomic) CGRect layoutLockedFrame;
+@property (nonatomic, strong, nonnull) TermUIState *termUIState;
+
+@property (nonatomic, strong) LayoutConstraintManager *constraintManager;
+@property (nonatomic, readonly) BOOL isReady;
+@property (nonatomic, readonly) CGRect selectionRect;
+@property (nonatomic, readonly) SmarterTermInput *webView;
+@property (nonatomic, readonly) SmarterTermInput *browserView;
+@property (nonatomic, weak) id termController;
+@property (nonatomic, readonly) NSInteger rows;
+@property (nonatomic, readonly) NSInteger cols;
+
+- (void)setCmdKeyPressed:(BOOL)pressed;
+
+- (CGRect)webViewFrame;
+- (void)load;
+- (void)applyTermUIState:(nonnull TermUIState *)termUIState;
+- (void)clear;
+- (void)setWidth:(NSInteger)count;
+- (void)setFontSize:(NSNumber *)newSize;
+- (void)write:(NSString *)data;
+- (void)processKB:(NSString *)str;
+- (void)setCursorBlink:(BOOL)state;
+- (void)setBoldAsBright:(BOOL)state;
+- (void)setBoldEnabled:(NSUInteger)state;
+- (void)setClipboardWrite:(BOOL)state;
+- (void)applyTheme:(NSString *)themeName;
+- (void)copy:(id _Nullable )sender;
+- (void)copyRaw:(id _Nullable )sender;
+- (void)pasteSelection:(id _Nullable)sender;
+- (void)terminate;
+- (void)reset;
+- (void)restore;
+- (BOOL)isFocused;
+
+- (void)blur;
+- (void)focus;
+- (void)reportTouchInPoint:(CGPoint)point;
+- (void)cleanSelection;
+- (void)increaseFontSize;
+- (void)decreaseFontSize;
+- (void)resetFontSize;
+- (void)writeB64:(NSData *)data;
+- (void)displayInput:(NSString *)input;
+- (void)apiResponse:(NSString *)name response:(NSString *)response;
+- (void)addBrowserWebView:(NSURL *)url agent: (NSString *)agent injectUIO: (BOOL) injectUIO;
+
+- (void)modifySideOfSelection;
+- (void)modifySelectionInDirection:(NSString *)direction granularity:(NSString *)granularity;
+
+- (void)pasteString:(NSString *)str;
+
+// Layout mode control methods
+- (void)setLayoutModeFill;
+- (void)setLayoutModeFit;
+- (void)setLayoutModeCover;
+- (BKLayoutMode)currentLayoutMode;
+- (BOOL)isLayoutLocked;
+- (void)toggleLayoutLock;
+@end

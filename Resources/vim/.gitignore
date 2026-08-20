@@ -1,0 +1,6 @@
+# Ignore everything
+*
+# Except this file
+!.gitignore
+
+# Download from: https://github.com/blinksh/vim/releases/download/v9.1.0187/runtime.zip
